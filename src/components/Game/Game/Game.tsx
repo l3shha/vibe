@@ -30,6 +30,7 @@ export function Game() {
       />
       <Board
         board={board}
+        config={config}
         onCellClick={handleCellClick}
         onCellRightClick={handleRightClick}
       />

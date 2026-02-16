@@ -1,21 +1,34 @@
 import { memo } from 'react';
 import type { Board as BoardType } from '@/types';
+import type { GameConfig } from '@/types';
 import { Cell } from '../Cell';
 import styles from './Board.module.scss';
 
 interface BoardProps {
   board: BoardType | null;
+  config: GameConfig;
   onCellClick: (row: number, col: number) => void;
   onCellRightClick: (e: React.MouseEvent, row: number, col: number) => void;
 }
 
-function BoardComponent({ board, onCellClick, onCellRightClick }: BoardProps) {
+function BoardComponent({ board, config, onCellClick, onCellRightClick }: BoardProps) {
   if (!board) {
+    const { rows, cols } = config;
     return (
-      <div className={styles.board} data-placeholder>
-        <div className={styles.board__placeholder}>
-          Click any cell to start
-        </div>
+      <div className={styles.board} role="grid">
+        {Array.from({ length: rows }, (_, rowIndex) => (
+          <div key={rowIndex} className={styles.board__row} role="row">
+            {Array.from({ length: cols }, (_, colIndex) => (
+              <button
+                key={`${rowIndex}-${colIndex}`}
+                type="button"
+                className={styles.board__startCell}
+                onClick={() => onCellClick(rowIndex, colIndex)}
+                title="Click to start"
+              />
+            ))}
+          </div>
+        ))}
       </div>
     );
   }
