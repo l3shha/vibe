@@ -1,4 +1,9 @@
 .board {
+  --cell-size: min(
+    32px,
+    calc((100dvw - 48px) / var(--cols, 10)),
+    calc((100dvh - 160px) / var(--rows, 10))
+  );
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -8,6 +13,8 @@
   border: 3px solid;
   border-color: #fff #808080 #808080 #fff;
   box-shadow: inset 1px 1px 0 0 #dfdfdf;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .board[data-placeholder] {
@@ -23,8 +30,10 @@
 }
 
 .board__startCell {
-  width: 32px;
-  height: 32px;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  min-width: 12px;
+  min-height: 12px;
   padding: 0;
   border: 2px solid #888;
   background-color: #c0c0c0;

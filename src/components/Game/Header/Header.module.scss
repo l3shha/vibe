@@ -2,11 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding: 8px 12px;
   background-color: #c0c0c0;
   border: 2px solid;
   border-color: #808080 #fff #fff #808080;
   margin-bottom: 8px;
+}
+
+.header__size {
+  padding: 4px 8px;
+  font-size: 14px;
+  background-color: #e0e0e0;
+  border: 1px solid #808080;
+  cursor: pointer;
+  min-width: 0;
 }
 
 .header__display {

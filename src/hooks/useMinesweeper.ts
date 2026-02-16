@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import type { Board, GameStatus } from '@/types';
-import { GAME_CONFIG, TOTAL_CELLS } from '@/config';
+import type { Board, GameConfig, GameStatus } from '@/types';
+import { PRESETS, DEFAULT_PRESET, getTotalCells } from '@/config';
 import {
   createBoard,
   revealCell,
@@ -10,19 +10,20 @@ import {
 } from '@/utils/game';
 
 export function useMinesweeper() {
+  const [config, setConfigState] = useState<GameConfig>(() => PRESETS[DEFAULT_PRESET]);
   const [board, setBoard] = useState<Board | null>(null);
   const [status, setStatus] = useState<GameStatus>('idle');
   const [startTime, setStartTime] = useState<number | null>(null);
   const [isFirstClick, setIsFirstClick] = useState(true);
 
   const initBoard = useCallback((row: number, col: number) => {
-    const newBoard = createBoard(GAME_CONFIG, row, col);
+    const newBoard = createBoard(config, row, col);
     setBoard(newBoard);
     setStatus('playing');
     setStartTime(Date.now());
     setIsFirstClick(false);
     return newBoard;
-  }, []);
+  }, [config]);
 
   const handleCellClick = useCallback((row: number, col: number) => {
     if (status === 'game-over' || status === 'victory') return;
@@ -51,10 +52,11 @@ export function useMinesweeper() {
     const newBoard = revealCell(currentBoard, row, col);
     setBoard(newBoard);
 
-    if (checkVictory(newBoard, TOTAL_CELLS, GAME_CONFIG.minesCount)) {
+    const totalCells = getTotalCells(config);
+    if (checkVictory(newBoard, totalCells, config.minesCount)) {
       setStatus('victory');
     }
-  }, [board, status, isFirstClick, initBoard]);
+  }, [board, config, status, isFirstClick, initBoard]);
 
   const handleRightClick = useCallback(
     (e: React.MouseEvent, row: number, col: number) => {
@@ -77,11 +79,20 @@ export function useMinesweeper() {
     setIsFirstClick(true);
   }, []);
 
+  const setConfig = useCallback((newConfig: GameConfig) => {
+    setConfigState(newConfig);
+    setBoard(null);
+    setStatus('idle');
+    setStartTime(null);
+    setIsFirstClick(true);
+  }, []);
+
   const flagsCount = board ? countFlaggedCells(board) : 0;
 
   return {
     board,
-    config: GAME_CONFIG,
+    config,
+    setConfig,
     status,
     startTime,
     flagsCount,

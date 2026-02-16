@@ -8,6 +8,7 @@ export function Game() {
   const {
     board,
     config,
+    setConfig,
     status,
     startTime,
     flagsCount,
@@ -22,18 +23,22 @@ export function Game() {
   return (
     <div className={styles.game}>
       <Header
+        config={config}
+        onConfigChange={setConfig}
         timer={timer}
         flagsCount={flagsCount}
         totalMines={config.minesCount}
         status={status}
         onRestart={restart}
       />
-      <Board
-        board={board}
-        config={config}
-        onCellClick={handleCellClick}
-        onCellRightClick={handleRightClick}
-      />
+      <div className={styles.game__boardWrap}>
+        <Board
+          board={board}
+          config={config}
+          onCellClick={handleCellClick}
+          onCellRightClick={handleRightClick}
+        />
+      </div>
     </div>
   );
 }

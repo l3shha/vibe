@@ -18,3 +18,7 @@ export interface GameConfig {
   cols: number;
   minesCount: number;
 }
+
+export type PresetId = 'small' | 'medium' | 'large';
+
+export const PRESET_IDS: PresetId[] = ['small', 'medium', 'large'];

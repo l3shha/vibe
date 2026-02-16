@@ -12,10 +12,15 @@ interface BoardProps {
 }
 
 function BoardComponent({ board, config, onCellClick, onCellRightClick }: BoardProps) {
+  const boardStyle = {
+    '--cols': config.cols,
+    '--rows': config.rows,
+  } as React.CSSProperties;
+
   if (!board) {
     const { rows, cols } = config;
     return (
-      <div className={styles.board} role="grid">
+      <div className={styles.board} style={boardStyle} role="grid">
         {Array.from({ length: rows }, (_, rowIndex) => (
           <div key={rowIndex} className={styles.board__row} role="row">
             {Array.from({ length: cols }, (_, colIndex) => (
@@ -34,7 +39,7 @@ function BoardComponent({ board, config, onCellClick, onCellRightClick }: BoardP
   }
 
   return (
-    <div className={styles.board} role="grid">
+    <div className={styles.board} style={boardStyle} role="grid">
       {board.map((row, rowIndex) => (
         <div key={rowIndex} className={styles.board__row} role="row">
           {row.map((cell) => (

@@ -4,4 +4,6 @@ export type {
   Board,
   GameConfig,
   GameStatus,
+  PresetId,
 } from './game';
+export { PRESET_IDS } from './game';
