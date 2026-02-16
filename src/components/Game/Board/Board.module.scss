@@ -1,0 +1,28 @@
+.board {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 8px;
+  background-color: #bdbdbd;
+  border: 3px solid;
+  border-color: #fff #808080 #808080 #fff;
+  box-shadow: inset 1px 1px 0 0 #dfdfdf;
+}
+
+.board[data-placeholder] {
+  min-width: 320px;
+  min-height: 320px;
+  align-items: center;
+  justify-content: center;
+}
+
+.board__row {
+  display: flex;
+  gap: 0;
+}
+
+.board__placeholder {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
